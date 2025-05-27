@@ -15,7 +15,12 @@ A comprehensive series of Linux kernel programming projects demonstrating memory
 
 ## Project 2: Basic Kernel Module & Custom System Call
 
-Basic kernel module with parameters and custom system call implementation for Linux v6.10.
+**Objective**: Implement foundational kernel programming concepts including module lifecycle management and custom system call integration.
+
+### Implementation
+- **Parameterized Kernel Module**: Created a loadable module that accepts integer and string parameters at load time, demonstrating module parameter handling and kernel logging via `printk()`
+- **Custom System Call**: Implemented syscall #463 that logs personalized messages to the kernel ring buffer, requiring kernel recompilation and syscall table modification
+- **Userspace Integration**: Developed test program that invokes the custom syscall using the `syscall()` interface
 
 ### Files
 - `my_name.c` - Kernel module with configurable parameters
@@ -33,16 +38,17 @@ dmesg | tail
 sudo rmmod my_name
 ```
 
-### Technical Details
-- Module parameters: `intParameter` (int, default: 2025), `charParameter` (char*, default: "Spring")
-- Custom syscall logs message to kernel ring buffer
-- Uses `printk()`, `module_param()`, and syscall registration APIs
-
 ---
 
 ## Project 3: Producer-Consumer Kernel Threads
 
-Multithreaded producer-consumer implementation using kernel threads and semaphore synchronization.
+**Objective**: Demonstrate kernel-level multithreading and synchronization using the classic producer-consumer problem with semaphores.
+
+### Implementation
+- **Kernel Thread Management**: Created configurable numbers of producer and consumer kernel threads using `kthread_run()` with proper naming conventions and lifecycle management
+- **Semaphore Synchronization**: Implemented two counting semaphores (`empty` and `full`) to coordinate access between producer and consumer threads, preventing race conditions
+- **Graceful Shutdown**: Implemented proper thread termination using `kthread_should_stop()` and `kthread_stop()` to ensure clean module unloading
+- **Infinite Loop Design**: Threads run continuously until module removal, simulating real-world kernel thread behavior
 
 ### Files
 - `producer_consumer.c` - Module implementation
@@ -57,17 +63,18 @@ dmesg | tail -20
 sudo rmmod producer_consumer
 ```
 
-### Technical Details
-- Module parameters: `prod` (producers), `cons` (consumers), `size` (empty semaphore init)
-- Creates named kernel threads: "Producer-X", "Consumer-X"
-- Uses counting semaphores (`empty`, `full`) for synchronization
-- APIs: `kthread_run()`, `kthread_stop()`, `sema_init()`, `down_interruptible()`, `up()`
-
 ---
 
 ## Project 4: Process Memory Allocation
 
-Kernel memory allocator using 5-level page tables and virtual device communication.
+**Objective**: Build a complete kernel-space memory allocator that handles user process memory requests through virtual device communication and 5-level page table management.
+
+### Implementation
+- **Virtual Device Interface**: Created `/dev/memalloc` character device with ioctl handlers for ALLOC and FREE operations, enabling secure user-kernel communication
+- **5-Level Page Table Walking**: Implemented complete page table traversal (PGD→P4D→PUD→PMD→PTE) to check existing memory mappings and prevent double allocation
+- **Dynamic Page Allocation**: Built page table hierarchy creation system that allocates missing page table levels and maps physical pages with appropriate read/write permissions
+- **Resource Management**: Implemented allocation tracking with limits (4096 pages, 100 requests) and proper error handling for resource exhaustion
+- **Memory Safety**: Used `copy_from_user()` for secure data transfer and `get_zeroed_page()` for clean page allocation
 
 ### Files
 ```
@@ -89,18 +96,18 @@ ls /dev/memalloc
 sudo rmmod memalloc
 ```
 
-### Technical Details
-- Virtual device: `/dev/memalloc` for ioctl communication
-- 5-level page tables: PGD→P4D→PUD→PMD→PTE traversal
-- Memory allocation with read/write permissions
-- Limits: 4096 pages max, 100 allocation requests max
-- APIs: `get_zeroed_page()`, `set_pte_at()`, `copy_from_user()`
-
 ---
 
 ## Project 5: USB Block I/O Access
 
-Kernel module providing direct block-level access to USB storage devices through ioctl operations and Linux block abstraction layer.
+**Objective**: Provide direct block-level access to USB storage devices from userspace through kernel module abstraction of the Linux block layer.
+
+### Implementation
+- **Block Device Abstraction**: Implemented direct file operations on USB devices using `filp_open()`, `kernel_read()`, and `kernel_write()` to bypass filesystem overhead
+- **IOCTL Operation Handlers**: Created four distinct block operations (READ, WRITE, READOFFSET, WRITEOFFSET) supporting both sequential and random access patterns
+- **Memory Buffer Management**: Implemented secure buffer handling using `vmalloc()` for kernel space allocation and `copy_from_user()`/`copy_to_user()` for data transfer
+- **Offset Tracking**: Built automatic offset management system for sequential operations while supporting explicit offset control for random access
+- **Multi-File Architecture**: Designed modular system with separate main module and ioctl handler files for clean code organization
 
 ### Files
 ```
@@ -120,13 +127,6 @@ ls /dev/kmod
 ./test.sh read 512 1 0
 sudo rmmod kmod
 ```
-
-### Technical Details
-- Block Operations: READ, WRITE, READOFFSET, WRITEOFFSET via ioctl
-- USB Device Access: Direct file operations on `/dev/sdb` (configurable)
-- Block Abstraction: Uses `kernel_read()` and `kernel_write()` for 512-byte operations
-- Memory Management: Secure user-kernel data transfer with `vmalloc()` buffers
-- APIs: `filp_open()`, `kernel_read()`, `kernel_write()`, `copy_from_user()`, `copy_to_user()`
 
 ---
 
