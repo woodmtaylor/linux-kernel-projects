@@ -1,6 +1,6 @@
 # Linux Kernel and Operating Systems Internals
 
-A comprehensive series of Linux kernel programming projects demonstrating memory management, system calls, multithreading, and block I/O operations on Linux v6.10.
+A series of Linux kernel programming projects demonstrating memory management, system calls, multithreading, and block I/O operations on Linux v6.10.
 
 ## Table of Contents
 
