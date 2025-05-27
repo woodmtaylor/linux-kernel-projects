@@ -9,7 +9,6 @@ A series of Linux kernel programming projects demonstrating memory management, s
 - [Project 4: Process Memory Allocation](#project-4-process-memory-allocation)
 - [Project 5: USB Block I/O Access](#project-5-usb-block-io-access)
 - [Technical Stack](#technical-stack)
-- [Repository Structure](#repository-structure)
 
 ---
 
@@ -136,14 +135,3 @@ sudo rmmod kmod
 - C programming
 - Make build system
 - x86_64 architecture
-
-## Repository Structure
-
-```
-linux-kernel-projects/
-├── README.md
-├── project-2-basic-module/
-├── project-3-producer-consumer/
-├── project-4-memory-allocation/
-└── project-5-usb-block-io/
-```
