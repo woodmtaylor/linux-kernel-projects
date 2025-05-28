@@ -6,7 +6,6 @@ A series of Linux kernel programming projects demonstrating memory management, s
 - [Project 3: Producer-Consumer Kernel Threads](#project-3-producer-consumer-kernel-threads)
 - [Project 4: Process Memory Allocation](#project-4-process-memory-allocation)
 - [Project 5: USB Block I/O Access](#project-5-usb-block-io-access)
-- [Technical Stack](#technical-stack)
 
 ---
 
