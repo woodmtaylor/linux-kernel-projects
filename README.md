@@ -10,6 +10,13 @@ A series of Linux kernel programming projects demonstrating memory management, s
 
 ---
 
+## Technical Stack
+
+- Linux kernel v6.10
+- C programming
+- Make build system
+- x86_64 architecture
+
 ## Project 2: Basic Kernel Module & Custom System Call
 
 **Objective**: Implement foundational kernel programming concepts including module lifecycle management and custom system call integration.
@@ -126,10 +133,3 @@ sudo rmmod kmod
 ```
 
 ---
-
-## Technical Stack
-
-- Linux kernel v6.10
-- C programming
-- Make build system
-- x86_64 architecture
