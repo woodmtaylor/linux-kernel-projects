@@ -2,8 +2,6 @@
 
 A series of Linux kernel programming projects demonstrating memory management, system calls, multithreading, and block I/O operations on Linux v6.10.
 
-## Table of Contents
-
 - [Project 2: Basic Kernel Module & Custom System Call](#project-2-basic-kernel-module--custom-system-call)
 - [Project 3: Producer-Consumer Kernel Threads](#project-3-producer-consumer-kernel-threads)
 - [Project 4: Process Memory Allocation](#project-4-process-memory-allocation)
